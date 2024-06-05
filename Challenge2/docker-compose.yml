@@ -8,11 +8,14 @@ services:
     env_file:
       - ./backend/.env
     volumes:
-      - ./backend:/usr/src/app/
+      - backend:/usr/src/app
+      - static:/src/app/static
+      - media:/src/app/media
     ports:
       - "8000:8000"
     depends_on:
       - db
+    image: sebastian677/django-react-craftech:latest
 
   db:
     container_name: db
@@ -20,20 +23,27 @@ services:
     env_file:
       - ./backend/.env.postgres
     volumes:
-      - backend_postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
-  frontend:
-    container_name: frontend
+  react:
+    container_name: react
     build:
       context: ./frontend
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/usr/src/app/
+      - frontend_app:/usr/src/app/
     depends_on:
       - api
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    image: sebastian677/django-react-craftech:latests
 
 volumes:
-  backend_postgres_data:
+  backend:
+  static:
+  media:
+  postgres_data:
+  frontend_app:

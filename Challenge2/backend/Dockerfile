@@ -2,7 +2,7 @@
 FROM python:3.8.3-alpine
 
 # set work directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -23,11 +23,13 @@ RUN apk add --update --no-cache --virtual .tmp-build-deps \
   && pip install -r requirements.txt \
   && apk del --no-cache .tmp-build-deps
 
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
-
 # copy project
 COPY . .
 
+EXPOSE 8000
+
 # run entrypoint.sh
-ENTRYPOINT "sh" "/usr/src/app/entrypoint.sh"
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+# ENTRYPOINT ["ls", "/app"]
+ENTRYPOINT "sh" "/app/entrypoint.sh"
