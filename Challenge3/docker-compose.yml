@@ -6,3 +6,4 @@ services:
       context: ./Nginx
     ports:
       - "3000:80"
+    image: challenge3/nginx-index-test:latest
