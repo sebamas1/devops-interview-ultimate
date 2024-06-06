@@ -10,7 +10,7 @@ env:
   ECR_REPOSITORY: challenge3-ecr           # set this to your Amazon ECR repository name
   ECS_SERVICE: challenge3-service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: challenge3-cluster                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: ../Challenge3/challenge3-craftech-task-revision1.json # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: ../../Challenge3/challenge3-craftech-task-revision1.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: nginx                      # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
