@@ -16,6 +16,30 @@ Una vez hecho eso, la APP funciono bien en el local, lo complicado fue hacer que
 
 Si bien con ecs-cli se logra levantar el proyecto en la nube, y quedan los 3 servicios expuestos, no es posible conectar el front con el back debido a problemas de seguridad propios al navegador(chrome). Parece haber un problema con el sistema CORS de la API que esta bloqueando los request que manda el navegador en la nube. El front funciona correctamente, y la API responde a postman.
 
-chrome://flags/#block-insecure-private-network-requests
+*chrome://flags/#block-insecure-private-network-requests*
 
 Para que el navegador no se niegue a mandar la solicitud, es necesario desactivar la flag de arriba.
+
+Es necesario: 
+
+- Tener instalado ecs-cli. Referencia: [ecs-cli](https://www.docker.com/blog/docker-compose-from-local-to-amazon-ecs/). 
+  
+- Estar logeado en docker para poder pushear las imagenes a DockerHub. 
+
+- Estar logeado con credenciales de aws para que la herramienta pueda usar la cuenta de aws
+
+Para pushear las imagenes
+
+` docker compose push `
+
+Para que docker compose haga target en ECS, es necesario crear un contexto de docker, del tipo ECS
+
+` docker context create ecs craftech_cloud `
+
+Se switchea a ese contexto 
+
+` docker context use craftech_cloud `
+
+Luego se puede hacer el deploy normalmente con
+
+` docker compose up -d `
