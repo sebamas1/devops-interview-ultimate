@@ -25,7 +25,11 @@ jobs:
       - name: Build Docker image
         run: docker-compose -f Challenge3/docker-compose.yml build
 
+      - name: Tag Docker image
+        run: |
+          docker tag challenge3/nginx-index-test:latest sebastian677/challenge3:latest
+
       - name: Push Docker image
         run: |
-          docker push challenge3/nginx-index-test:latest
+          docker push sebastian677/challenge3:latest
 
