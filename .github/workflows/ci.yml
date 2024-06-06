@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     paths:
-      - 'Challenge3/Nginx/index.html'
+      - 'Challenge 3/Nginx/index.html'
 
 jobs:
   build-and-deploy:
@@ -27,13 +27,13 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          IMAGE_NAME=challenge1/nginx-indexTest
+          IMAGE_NAME=challenge3/nginx-indexTest
           IMAGE_TAG=latest
           docker tag Challenge3_image_name:latest $IMAGE_NAME:$IMAGE_TAG
 
       - name: Push Docker image
         run: |
-          IMAGE_NAME=challenge1/nginx-indexTest
+          IMAGE_NAME=challenge3/nginx-indexTest
           IMAGE_TAG=latest
           docker push $IMAGE_NAME:$IMAGE_TAG
 
