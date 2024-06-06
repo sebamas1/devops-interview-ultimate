@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     paths:
-      - 'Challenge 3/Nginx/index.html'
+      - 'Challenge3/Nginx/index.html'
 
 jobs:
   build-and-deploy:
@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker-compose -f Challenge 3/docker-compose.yml build
+        run: docker-compose -f Challenge3/docker-compose.yml build
 
       - name: Tag Docker image
         run: |
