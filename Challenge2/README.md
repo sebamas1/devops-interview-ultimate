@@ -14,6 +14,8 @@ Una vez hecho eso, la APP funciono bien en el local, lo complicado fue hacer que
 
 - Opcion 3: otra opcion es hacer lo que hacen las herramientas anteriormente mencionadas, pero de forma "manual" escribiendo un script para usarse con AWS CLI. Este no es un aproach que haya podido hacer funcionar por el momento.
 
+- Opcion 4: usando Kubernetes. Una vez se tienen las imagenes necesarias en un repositorio de imagenes como Docker Hub, se puede configurar un cluster de Kubernetes en amazon EKS. Luego se configuran archivos YAML para el despliegue de los servicios de la db, el front y el back.
+
 Si bien con ecs-cli se logra levantar el proyecto en la nube, y quedan los 3 servicios expuestos, no es posible conectar el front con el back debido a problemas de seguridad propios al navegador(chrome). Parece haber un problema con el sistema CORS de la API que esta bloqueando los request que manda el navegador en la nube. El front funciona correctamente, y la API responde a postman.
 
 *chrome://flags/#block-insecure-private-network-requests*
