@@ -22,6 +22,7 @@ RUN apk add --update --no-cache --virtual .tmp-build-deps \
   zlib zlib-dev \
   && pip install -r requirements.txt \
   && apk del --no-cache .tmp-build-deps
+# RUN pip install django-cors-headers
 
 # copy project
 COPY . .
