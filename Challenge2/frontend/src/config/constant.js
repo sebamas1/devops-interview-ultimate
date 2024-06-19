@@ -1,7 +1,7 @@
 export const BASENAME = ''; // don't add '/' at end off BASENAME
 export const BASE_URL = '/app/dashboard/default';
 export const BASE_TITLE = ' | Craftech Example App ';
-export const API_SERVER = 'http://192.168.49.2:32001/api/';
+export const API_SERVER = 'http://192.168.49.2:30080/api/';
 
 export const CONFIG = {
     layout: 'vertical', // disable on free version

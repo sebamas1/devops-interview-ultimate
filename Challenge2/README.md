@@ -18,9 +18,7 @@ Una vez hecho eso, la APP funciono bien en el local, lo complicado fue hacer que
 
 Si bien con ecs-cli se logra levantar el proyecto en la nube, y quedan los 3 servicios expuestos, no es posible conectar el front con el back debido a problemas de seguridad propios al navegador(chrome). Parece haber un problema con el sistema CORS de la API que esta bloqueando los request que manda el navegador en la nube. El front funciona correctamente, y la API responde a postman.
 
-*chrome://flags/#block-insecure-private-network-requests*
-
-Para que el navegador no se niegue a mandar la solicitud, es necesario desactivar la flag de arriba.
+## Opcion 2
 
 Es necesario: 
 
@@ -45,3 +43,35 @@ Se switchea a ese contexto
 Luego se puede hacer el deploy normalmente con
 
 ` docker compose up -d `
+
+### Opcion 4
+
+Es necesario tener instalado kubectl, docker compose y minikube
+
+Se generaron 3 pods, 1 para cada uno de los contenedores. Asi mismo, se generan 3 servicios, un ClusterIP para la db, el cual usa la API, un NodePort para la API y un LoadBalancer para el front.
+
+Para el despliegue local, primero se inicia el cluster
+
+` minikube start --static-ip 192.168.49.2 `
+
+
+Luego se aplican los .yaml al cluster
+
+```
+kubectl apply -f db-deployment.yaml
+kubectl apply -f react-django-deploy.yaml
+kubectl apply -f services-deploy.yaml
+```
+
+Para que se le asigne una IP al LoadBalancer del frontend, se debe ejecutar el comando
+
+` minikube tunnel`
+
+Una vez que el comando se ejecute exitosamente, la IP fue asignada y se puede ver con el siguiente comando, pudiendo acceder en el navegador.
+
+` kubectl get services `
+
+
+
+
+

@@ -15,7 +15,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    image: sebastian677/django-react-craftech:latest
+    image: sebastian677/django-react-craftech:back_latest
 
   db:
     container_name: db
@@ -39,7 +39,7 @@ services:
       - api
     environment:
       - CHOKIDAR_USEPOLLING=true
-    image: sebastian677/django-react-craftech:latests
+    image: sebastian677/django-react-craftech:front_latest
 
 volumes:
   backend:
