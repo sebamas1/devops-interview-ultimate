@@ -71,6 +71,27 @@ Una vez que el comando se ejecute exitosamente, la IP fue asignada y se puede ve
 
 ` kubectl get services `
 
+#### Despliegue en la nube
+
+Se necesita tener instalado AWSCLI con las credenciales de un usuario IAM capaz de usar amazon EKS. Ademas se necesita eksctl para la generacion automatizada del cluster.
+
+Una vez se tienen las herramientas necesarias, se ejecuta el siguiente comando, que genera un cluster EKS con 3 nodos, que las manejan instancias EC2 del tipo t2.small.
+
+```
+eksctl create cluster \                  
+--name challenge-cluster \
+--region us-east-2 \
+--nodegroup-name workers \
+--node-type t2.small \
+--nodes 3
+```
+
+Luego de que el comando se termina de ejecutar, se maneja el cluster como se hacia en el local, con kubectl apply. Dado que se crea un servicio loadbalancer, la ip que se expone a internet con el front va a ser dada por el comando kubectl get services
+
+Para borrar el cluster y todos los recursos asociados:
+
+`eksctl delete cluster --name challenge-cluster`
+
 
 
 
