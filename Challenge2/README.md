@@ -92,6 +92,8 @@ Para borrar el cluster y todos los recursos asociados:
 
 `eksctl delete cluster --name challenge-cluster`
 
+El unico problema que queda por solucionar en el despliegue en la nube, es encontrar una forma estatica de que el front encuentre la direccion del back. A pesar de que dentro del cluster, los pods se pueden comunicar, el frontend hace las solicitudes desde el navegador, y no desde el cluster, por lo que las direcciones a servicios del cluster no pueden ser resueltas. Para esto se podria exponer un loadbalancer que solamente acepte solicitudes del front, pero no hay forma de saber cual direccion se le va a asignar a ese loadbalancer antes de compilar el codigo de react.
+
 
 
 
