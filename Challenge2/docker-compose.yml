@@ -14,11 +14,11 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - db-service
     image: sebastian677/django-react-craftech:back_latest
 
-  db:
-    container_name: db
+  db-service:
+    container_name: db-service
     image: postgres:12.0-alpine
     env_file:
       - ./backend/.env.postgres

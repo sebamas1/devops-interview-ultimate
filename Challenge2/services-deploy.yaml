@@ -18,11 +18,11 @@ kind: Service
 metadata:
   name: django-api-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: django-api
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-      nodePort: 30080 
+      # nodePort: 30080 

@@ -8,19 +8,9 @@ spec:
   containers:
     - name: api
       image: sebastian677/django-react-craftech:back_latest
-      env:
-        - name: SQL_ENGINE #kubectl create configmap backend-config --from-env-file=config.env
-          value: "django.db.backends.postgresql"
-        - name: SQL_DATABASE
-          value: "core"
-        - name: SQL_USER
-          value: "user"
-        - name: SQL_PASSWORD
-          value: "password"
-        - name: SQL_HOST
-          value: "db-service"
-        - name: SQL_PORT
-          value: "5432"
+      envFrom:
+        - configMapRef:
+            name: back-config
       volumeMounts:
         - name: backend
           mountPath: /usr/src/app
@@ -50,9 +40,9 @@ spec:
   containers:
     - name: react
       image: sebastian677/django-react-craftech:front_latest
-      env:
-        - name: CHOKIDAR_USEPOLLING
-          value: "true"
+      envFrom:
+        - configMapRef:
+            name: front-config
       volumeMounts:
         - name: frontend-app
           mountPath: /usr/src/app

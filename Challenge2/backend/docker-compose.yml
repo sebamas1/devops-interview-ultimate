@@ -21,7 +21,7 @@ services:
       - db
   
   db:
-    container_name: database
+    container_name: db-service
     image: postgres:12.0-alpine
     env_file: ./.env.postgres
     volumes:
