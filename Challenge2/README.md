@@ -48,26 +48,19 @@ Luego se puede hacer el deploy normalmente con
 
 Es necesario tener instalado kubectl, docker compose y minikube
 
-Se generaron 3 pods, 1 para cada uno de los contenedores. Asi mismo, se generan 3 servicios, un ClusterIP para la db, el cual usa la API, un NodePort para la API y un LoadBalancer para el front.
+Se generaron 3 pods, 1 para cada uno de los contenedores. Asi mismo, se generan 3 servicios, un ClusterIP para la db, el cual usa la API, un LoadBalancer para la API y un LoadBalancer para el front.
 
-Para el despliegue local, primero se inicia el cluster
+#### Despliegue local
 
-` minikube start --static-ip 192.168.49.2 `
-
-
-Luego se aplican los .yaml al cluster
-
-```
-kubectl apply -f db-deployment.yaml
-kubectl apply -f react-django-deploy.yaml
-kubectl apply -f services-deploy.yaml
-```
-
-Para que se le asigne una IP al LoadBalancer del frontend, se debe ejecutar el comando
+Se ejecuta el script *deploy.sh* para despliegue local, el cual va a levantar el cluster local, generar los servicios y esperar a que se le asignen IP a esos servicios, lo cual se hace con el siguiente comando
 
 ` minikube tunnel`
 
-Una vez que el comando se ejecute exitosamente, la IP fue asignada y se puede ver con el siguiente comando, pudiendo acceder en el navegador.
+Una vez asignadas las IP, el script levanta la IP asignada y la pasa como variable de entorno al frontend para que este pueda encontrar el backend. Esto se hace generando los congifmaps correspondientes a cada archivo .env presente en el proyecto.
+
+Luego de esto, se construyen y pushean las imagenes a dockerhub, para luego crear los pods correspondientes al back y el front.
+
+Se puede ver la IP asignada al frontend usando el comando
 
 ` kubectl get services `
 
@@ -86,18 +79,13 @@ eksctl create cluster \
 --nodes 3
 ```
 
-Luego de que el comando se termina de ejecutar, se maneja el cluster como se hacia en el local, con kubectl apply. Dado que se crea un servicio loadbalancer, la ip que se expone a internet con el front va a ser dada por el comando kubectl get services
+Luego de que el comando se termina de ejecutar, se maneja el cluster como se hacía en el local. Dado que se crea un servicio loadbalancer, la ip que se expone a internet con el front va a ser dada por el comando kubectl get services
 
 Para borrar el cluster y todos los recursos asociados:
 
 `eksctl delete cluster --name challenge-cluster`
 
-El unico problema que queda por solucionar en el despliegue en la nube, es encontrar una forma estatica de que el front encuentre la direccion del back. A pesar de que dentro del cluster, los pods se pueden comunicar, el frontend hace las solicitudes desde el navegador, y no desde el cluster, por lo que las direcciones a servicios del cluster no pueden ser resueltas. Para esto se podria exponer un loadbalancer que solamente acepte solicitudes del front, pero no hay forma de saber cual direccion se le va a asignar a ese loadbalancer antes de compilar el codigo de react.
-
-##### Posibles soluciones
-
-Podria hacerse un script que cree el cluster en la nube, una vez finalizado que ejecute la creacion de los servicios y una vez que todo esto se ha creado, que obtenga la direccion asignada al LoadBalancer del backend para pasarla como variable de entorno al contenedor de docker. Hecho esto, se construye la imagen, se la pushea a dockerHub, y luego se construyen los pods correspondientes en el cluster que esta en la nube. 
-El backend debe estar configurado para que CORS unicamente acepte peticiones de parte del frontend, lo cual tambien se haria mediante una variable de entorno.
+**Para automatizar todo esto, se escribió un script que da la opcion a elegir entre despliegue local o en la nube.**
 
 
 
